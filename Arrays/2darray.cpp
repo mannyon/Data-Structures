@@ -11,4 +11,5 @@ int main()
         {2, 3, 4}
     };
     cout<<arr[2][0];
+    cout<<arr[2][0];
 }
