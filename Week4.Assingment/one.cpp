@@ -17,9 +17,9 @@ int findMin (vector<int> &nums,int start, int &x){
 }
 
 int main () {
-    vector<int> nums ({12,16,22,30,35,39,42,45,48,50,53,55,56});
+    vector<int> nums ({10,36,37,12,22,21,35});
     int n = nums.size();
-    int x = 35;
+    int x = 26;
     
 
     int i=0;
