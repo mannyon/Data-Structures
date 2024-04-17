@@ -4,51 +4,38 @@
 
 using namespace std;
 
-bool isPossibleSol (vector<int>&arr, int p, int cook, int totalTime){
-    int asCook = 1;
-    int cookAs = 0;
-    int time = 0;
-    int k = 0;
-    for(int i=1; i<=p; i++){
-        time = time + asCook * i;
-        cookAs = i;
-        if (time < totalTime){
-            k = time;
+bool isPossibleSolution(vector<int>cooksRanks, int nP, int mid){
+    int currP = 0;
+    for (int i=0; i<cooksRanks.size(); i++){
+        int R = cooksRanks[i], j = 1;
+        int timeTaken = 0;
+
+        while (true){
+            if(timeTaken + j * R <= mid){
+                currP++;
+                timeTaken+=j*R;
+                j++;
+            }
+            else {
+                break;
+            }
         }
-        else if (time > totalTime){
-            asCook++;
-            time = 0;
-            i = 0;
+        if (currP >= nP){
+            return true;
         }
-    } 
-
-    if (k <= totalTime){
-        return true;
     }
-
-    if (cookAs < cook){
-        return false;
-    }
-
-   return true;
+    return false;
 }
-       
 
-int main () {
-    vector<int> arr ({1, 2, 3, 4});
-    int p = 10;
-    int cook = arr.size();
-    int lastCook = arr[cook-1];  
-    int end=0;
-    int ans = -1;
-    for(int i=1; i<=p; i++){
-        end = end + lastCook * i;
-    }   
+int minTimeToCompleteOrder(vector<int>cooksRanks, int nP){
     int start = 0;
-    // isPossibleSol(arr, p, cook);
-    while (start<=end){
+    int highestRank = *max_element(cooksRanks.begin(), cooksRanks.end());
+    int end = highestRank * (nP * (nP + 1) / 2);
+    int ans = -1;
+
+    while (start <= end){
         int mid = start+(end-start)/2;
-        if(isPossibleSol(arr, p, cook, mid)==true){
+        if(isPossibleSolution(cooksRanks, nP, mid)){
             ans = mid;
             end = mid-1;
         }
@@ -56,5 +43,22 @@ int main () {
             start = mid+1;
         }
     }
-    cout<<ans;
+    return ans;
+}
+
+int main () {
+    cout<<"enter test cases"<<endl;
+    int T; cin>>T;
+    while (T--){
+        int nP, nC;
+        cin >> nP >> nC;
+        vector<int>cooksRanks;
+        while(nC--){
+            int R; cin>>R;
+            cooksRanks.push_back(R);
+        }
+
+        cout<<minTimeToCompleteOrder(cooksRanks, nP)<<endl;
+    }
+    return 0;
 }
