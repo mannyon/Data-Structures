@@ -13,7 +13,7 @@ int peakIndex (vector<int> arr, int n){
         if (arr[0]>arr[mid]){
             end = mid-1;
         }
-        else if(arr[0] < arr[mid]){
+        else if(arr[0] <= arr[mid]){
             peak = mid;
             start = mid+1;
         }
@@ -61,16 +61,17 @@ int findY(vector<int> arr, int n, int x, int peak){
 }
 
 int main () {
-    vector<int> arr ({7,8,9,1,2,3,4,5,6});
+    vector<int> arr ({7,8,9,6});
     int n = arr.size();
     int x = 8;
     int peak = peakIndex(arr, n);
-    if (arr[0]<=x){
+    cout<<arr[peak]<<endl;
+    // if (arr[0]<=x){
         
-        cout<<findY(arr, n, x, peak);
-    }
-    else {
-        cout<<findX(arr, n, x, peak);
-    }
+    //     cout<<findY(arr, n, x, peak);
+    // }
+    // else {
+    //     cout<<findX(arr, n, x, peak);
+    // }
     
 }
