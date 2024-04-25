@@ -12,6 +12,6 @@ int main (){
         ans.push_back(i+1);
         cout<<ans[i]<<" ";
     }
-    
+    // done with bs 19
 
 }
