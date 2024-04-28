@@ -20,7 +20,7 @@ long double findMedian(vector<int> arr, int n)
     }
 }
 // complete median of two sorted arra
-
+// started 2d arrays
 int main()
 {
     vector<int> a({1, 4, 8, 10, 10, 13, 13 });
