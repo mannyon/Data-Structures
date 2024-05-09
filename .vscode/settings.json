@@ -8,7 +8,8 @@
         "unordered_map": "cpp",
         "vector": "cpp",
         "initializer_list": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "*.tcc": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
