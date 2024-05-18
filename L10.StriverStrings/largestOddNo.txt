@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string largestOddNumber(string s) {
+
+            vector<int> digits;
+    for (char c : s)
+    {
+        digits.push_back(c - '0');
+    }
+    int max = INT_MIN;
+
+    if (digits[digits.size() - 1] % 2 == 1)
+    {
+        return s;
+    }
+    else if (digits[digits.size() - 1] % 2 == 0)
+    {
+        for (int i = 0; i < digits.size(); i++)
+        {
+            if (digits[i] % 2 == 1)
+            {
+                max = i;
+            }
+        }
+    }
+    if (max == INT_MIN)
+    {
+        return "";
+    }
+    else
+    {
+        return s.substr(0, max + 1);
+    }
+
+
+
+    }
+};
