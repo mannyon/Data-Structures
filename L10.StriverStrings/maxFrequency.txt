@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+
+using namespace std;
+
+string sorteString(string& s){
+    string sortedString = s;
+    sort(sortedString.begin(), sortedString.end(), greater<char>());
+    return sortedString;
+}
+
+
+int main()
+{
+    string s = "Aabb";
+    string ans;
+    int freqTable[256] = {0};
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        freqTable[s[i]]++;
+    }
+
+    
+
+    while (ans.size() < s.size())
+    {
+        int max = INT_MIN;
+        char curr_ch = 0;
+        int index = -1;
+        for (int i = 0; i < 256; i++)
+        {
+            if (freqTable[i] > max)
+            {
+                max = freqTable[i];
+                index = i;
+                curr_ch = i;
+            }
+        
+        }
+
+        while(max){
+            ans.push_back(curr_ch);
+            freqTable[index] = 0;
+            max--;
+        }
+
+        
+    }
+
+    cout<<ans;
+}
