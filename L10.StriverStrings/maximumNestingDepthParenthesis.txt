@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        int max = 0;
+    int open = 0;
+
+    for(char ch:s){
+        if(ch == '('){
+            open++;
+            if(open > max){
+                max = open;
+            }
+        }
+        else if(ch == ')'){
+            open--;
+        }
+    }
+    return max;
+    }
+};
