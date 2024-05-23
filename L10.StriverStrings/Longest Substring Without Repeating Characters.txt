@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int i=0, j=0, cnt=0, mainAns = 0;
+        
+    while(i<s.size()){
+        int map[256] = {0};
+        while(j<s.size()){
+            map[s[j]]++;
+
+            if(map[s[j]] == 1){
+                cnt++;
+                mainAns = max(mainAns, cnt);
+                j++;
+            }
+            else{
+                i= i+1;
+                j=i;
+                mainAns = max(mainAns, cnt);
+                cnt = 0;
+                memset(map, 0, sizeof(map));
+            }
+        }
+        i++;
+    }
+    return mainAns;
+    }
+};
