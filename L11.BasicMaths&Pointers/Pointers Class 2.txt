@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+void solve(int arr[], int size){
+    *arr = *arr + 1;
+    // cout<<"solve "<<arr<<endl;
+    // cout<<"solve "<<&arr<<endl;
+}
+
+void solve(int *&p){
+    p = p+1;
+}
+
+int main() {
+    int a = 5;
+    int* p = &a;
+
+    cout<<p<<endl;
+    cout<<&p<<endl;
+    cout<<*p<<endl;
+
+    solve(p);
+
+    cout<<p<<endl;
+    cout<<&p<<endl;
+    cout<<*p<<endl;
+
+
+    // // cout<<"main "<<arr<<endl;
+    // cout<<"main "<<&arr<<endl;
+}
