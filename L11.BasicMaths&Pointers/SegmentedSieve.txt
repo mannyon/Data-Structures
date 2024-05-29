@@ -60,3 +60,6 @@ int main() {
         }
     }
 }
+
+
+//done with week6 assignment
