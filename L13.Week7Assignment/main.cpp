@@ -2,23 +2,12 @@
 
 using namespace std;
 
-int lastOccurence(string str, int size, int index, char target, int &ans){
-    if(index >= size){
-        return ans;
-    }
-    if(str[index] == target){
-        ans = index;
-        lastOccurence(str, size, index+1, target, ans);
-    }
-    lastOccurence(str, size, index+1, target, ans);
-    return ans;
-}
 
 int main() {
-    string str = "abcddefg";
-    int size = str.length();
-    int index = 0;
-    char target = 'd';
-    int ans;
-    cout<<lastOccurence(str, size, index, target, ans);
+    string num1 = "124";
+    string num2 = "10";
+    
+    int numof1 = stoi(num1);
+    int numof2 = stoi(num2);
+    cout<<numof1+numof2<<endl;
 }
