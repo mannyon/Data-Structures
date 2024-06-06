@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <cstring>
+
+using namespace std;
+
+void lastOccurence(string str, int size, int index, char target, int &ans){
+    if(index < 0){
+        return;
+    }
+    if(str[index] == target){
+        ans = index;
+        return;
+    }
+
+    lastOccurence(str, size, index-1, target, ans);
+    
+}
+
+int main() {
+
+    //   const char* str = "abcddeg";
+    // char ch = 'd';
+
+    // const char* lastOccurrence = strrchr(str, ch);
+
+    // if (lastOccurrence != nullptr) {
+    //     cout << "The last occurrence of '" << ch << "' is at position: " 
+    //               << (lastOccurrence - str) << endl;
+    // } else {
+    //     cout << "Character '" << ch << "' not found in the string." <<endl;
+    // }
+
+
+
+    const char* str = "abcddeg";
+    char ch = 'g';
+
+    const char* lastOccurenceType = strrchr(str, ch);
+
+    if(lastOccurenceType != nullptr){
+        cout<<lastOccurenceType-str<<endl;
+    }
+    else {
+        cout<<"not found";
+    }
+
+
+    // int size = str.length();
+    // int index = str.length() - 1;
+    // char target = 'c';
+    // int ans = -1;
+    // lastOccurence(str, size, index, target, ans);
+    // cout<<ans<<endl;
+}
