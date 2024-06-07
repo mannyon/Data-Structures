@@ -1,0 +1,25 @@
+#include <iostream>
+
+using namespace std;
+
+void isPalindrome(string&str, int i, int j, bool& ans){
+    if(i >= j){
+        ans = 1;
+        return;
+    }
+    if(str[i]!=str[j]){
+        ans = 0;
+        return;
+    }
+    isPalindrome(str, i+1, j-1, ans);
+}
+
+int main() {
+    string str = "racecar";
+    int i=0;
+    int j=str.size()-1;
+    bool ans = 0;
+    // bool ans = isPalindrome(str, i, j);
+    isPalindrome(str, i, j, ans);
+    ans==1?cout<<"palindrome":cout<<"not palidrome"<<endl;
+}
