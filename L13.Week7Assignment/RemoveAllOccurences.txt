@@ -1,0 +1,21 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void removeAllOccureneces(string&str, string&part){
+    if(str.find(part) == string::npos){
+        return;
+    }
+    int found = str.find(part);
+    str.erase(found, part.size());
+    removeAllOccureneces(str, part);
+}
+
+int main() {
+    string str = "daabcbaabcbc";
+    string part = "abc";
+    removeAllOccureneces(str, part);
+    cout<<str;
+}
