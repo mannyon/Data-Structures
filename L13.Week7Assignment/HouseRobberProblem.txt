@@ -1,0 +1,23 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int func(vector<int>&nums){
+    int i=0;
+    int j=1;
+    int robber1 = 0;
+    int robber2 = 0;
+    while(i<nums.size()){
+        robber1 += nums[i];
+        robber2 += nums[j];
+        i+=2, j+=2;
+    }
+    return max(robber1, robber2);
+}
+
+int main() {
+    vector<int>nums = {1,3,1};
+    int ans = func(nums);
+    cout<<ans;
+}
