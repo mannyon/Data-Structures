@@ -3,58 +3,33 @@
 
 using namespace std;
 
-bool findSubSum(int arr[], vector<int>&ans, int size, int k, int ind, int&sum){
+void findAllPossibilities(int arr[], vector<int>&ans, int t, int size, int ind){
     if(ind >= size){
-        if(sum == k){
+        if(t == 0){
             for(auto num:ans){
                 cout<<num<<" ";
             }
             cout<<endl;
-            return true;
         }
-        else return false;
+        return;
+    }   
+    if(t < 0){
+        return;
     }
 
     ans.push_back(arr[ind]);
-    sum+=arr[ind];
-    if(findSubSum(arr, ans, size, k, ind+1, sum) == true){
-        return true;
-    }
+    t-=arr[ind];
+    findAllPossibilities(arr, ans, t, size, ind);
 
     ans.pop_back();
-    sum-=arr[ind];
-
-    if(findSubSum(arr, ans, size, k, ind+1, sum) == true) return true;
-
-    return false;
+    t+=arr[ind];
+    findAllPossibilities(arr, ans, t, size, ind+1);
 }
 
-int findNumOfSubSeqSum(int arr[], int size, int k, int ind, int&sum){
-    if(ind >= size){
-        if(sum == k) return 1;
-        else return 0;
-    }
-
-
-    
-    sum+=arr[ind];
-
-    int l = findNumOfSubSeqSum(arr, size, k, ind+1, sum);
-    
-    sum-=arr[ind];
-
-    int r = findNumOfSubSeqSum(arr, size, k, ind+1, sum);
-
-    return l + r;
-}
 
 int main() {
-    int arr[] = {1, 2, 1};
-    int size = 3;
-    vector<int>ans;
-    int k = 2;
-    int ind = 0;
-    int sum = 0;
-    cout<<findNumOfSubSeqSum(arr, size, k, ind, sum);
-    // findSubSum(arr, ans, size, k, ind, sum);
+    int arr[] = {2};
+    vector<int> ans;
+    int t = 1;
+    findAllPossibilities(arr, ans, t, 1, 0);
 }
