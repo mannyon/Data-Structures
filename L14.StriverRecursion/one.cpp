@@ -3,27 +3,28 @@
 
 using namespace std;
 
-void printPalindrome(int arr[], int size, int ind, vector<int>&ans){
+void func(int arr[], vector<int>&ans, int size, int ind, int target){
     if(ind >= size){
-        for(auto num:ans){
-            cout<<num<<" ";
+        if(target == 0){
+            for(auto num:ans){
+                cout<<num<<" ";
+            }
+            cout<<endl;
         }
-        if(ans.size() == 0){
-            cout<<"{}";
-        }
-        cout<<endl;
         return;
     }
-
-    ans.push_back(arr[ind]);
-    printPalindrome(arr, size, ind+1, ans);
-    ans.pop_back();
-    printPalindrome(arr, size, ind+1, ans);
+    if(target >= arr[ind]){
+        ans.push_back(arr[ind]);
+        func(arr, ans, size, ind, target - arr[ind]);
+        ans.pop_back();
+    }
+    func(arr, ans, size, ind+1, target);
 }
 
 int main() {
-    int arr[] = {3, 1, 2};
+    int arr[] = {2,3,5};
     vector<int>ans;
+    int target = 8;
     int size = 3;
-    printPalindrome(arr, size, 0, ans);
+    func(arr, ans, size, 0, target);
 }
