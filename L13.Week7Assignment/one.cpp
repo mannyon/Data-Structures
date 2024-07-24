@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -29,21 +30,33 @@ void reverseString(string& s, int len, int start, int end){
     reverseString(s, len, start+1, end-1);
 }
 
+void addRE(string&num1, int p1, string&num2, int p2, int carry, string&ans){
+    //base case
+    if(p1 < 0 && p2 < 0){
+        if(carry != 0){
+            ans.push_back(carry + '0');
+        }
+        return;
+    }
+
+    //one case
+    int n1 = (p1 >= 0 ? num1[p1] : '0') - '0';
+    int n2 = (p2 >= 0 ? num2[p2] : '0') - '0';
+    int csum = n1 + n2 + carry;
+    int digit = csum % 10;
+    carry = csum / 10;
+    ans.push_back(digit + '0');
+
+    //recursive call
+    addRE(num1, p1-1, num2, p2-1, carry, ans);
+}
+
 
 int main() {
-    string s = "abcddefg";
-    int len = s.size();
-    int start = 0;
-    int end = len-1;
-    reverseString(s, len, start, end);
-    cout<<s<<endl;
-
-
-
-    // int len = s.length();
-    // char ch = 'd';
-    // int ind = len-1;
-    // int ans = -1;
-    // checkLastOcc(s, ch, ind, ans, len);
-    // ans==-1?cout<<"not found":cout<<"found at ind "<<ans<<endl;
+    string num1 = "11";
+    string num2 = "123";
+    string ans = "";
+    addRE(num1, num1.size()-1, num2, num2.size()-1, 0, ans);
+    reverse(ans.begin(), ans.end());
+    cout<<ans<<endl;
 }
