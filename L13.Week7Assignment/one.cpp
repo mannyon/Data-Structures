@@ -1,28 +1,39 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
+#include <limits.h>
 
-using namespace std;
+using namespace std; 
 
-void removeAllOcc(string&s, string&part){
+void findMaxProfit(vector<int>&prices, int &maxProfit, int i, int j){
     //base case
-    if(s.find(part) == string::npos){
+    if(i>=prices.size()){
         return;
     }
 
-    //one case
-    int pos = s.find(part);
-    s.erase(pos, part.size());
-
-    //recursive call
-    removeAllOcc(s, part);
+    
+    if(j<prices.size() && prices[i] < prices[j]){
+        maxProfit = max(prices[j]-prices[i], maxProfit);
+    }
+    if(j >= prices.size()){
+        i++, j=j+i;
+        findMaxProfit(prices, maxProfit, i, j);
+    }
+    else{
+        findMaxProfit(prices, maxProfit, i, j++);
+    }
 }
 
 int main() {
-    string s = "axxxxyyyyb";
-    string part = "xy";
-    
-    removeAllOcc(s, part);
+    vector<int>prices = {7,6,4,3,1};
+    int maxProfit = 0;
+    int i = 0;
+    int j = i+1;
 
-    cout<<s<<endl;
+    findMaxProfit(prices, maxProfit, i, j);
+
+    cout<<maxProfit;
+   
+
+
 }
