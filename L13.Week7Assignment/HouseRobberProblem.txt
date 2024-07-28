@@ -1,23 +1,26 @@
-#include <iostream>
-#include <vector>
+class Solution {
+public:
 
-using namespace std;
+    void robMoney(vector<int>&nums, int ind, int& maxMoney, int& sum){
+        //base case
+        if(ind >= nums.size()){
+            if(maxMoney < sum){
+                maxMoney = sum;
+            }
+            return;
+        }
 
-int func(vector<int>&nums){
-    int i=0;
-    int j=1;
-    int robber1 = 0;
-    int robber2 = 0;
-    while(i<nums.size()){
-        robber1 += nums[i];
-        robber2 += nums[j];
-        i+=2, j+=2;
+        //one case sol & recursive call
+        sum += nums[ind];
+        robMoney(nums, ind+2, maxMoney, sum);
+        sum -= nums[ind];
+        robMoney(nums, ind+1, maxMoney, sum);
     }
-    return max(robber1, robber2);
-}
 
-int main() {
-    vector<int>nums = {1,3,1};
-    int ans = func(nums);
-    cout<<ans;
-}
+    int rob(vector<int>& nums) {
+        int maxMoney = 0;
+        int sum = 0;
+        robMoney(nums, 0, maxMoney, sum);
+        return maxMoney;
+    }
+};
