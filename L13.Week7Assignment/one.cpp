@@ -17,11 +17,39 @@ void func(int n, int& sum, int i){
     
 }
 
-int main() {
-    int n = 12;
-    int sum = 0;
-    int i = 0;
-    func(n, sum, i);
+void findSumSub(vector<int>&arr, vector<int>&ans, vector<int>&sumArr, vector<vector<int>>&fullAns, int ind, int sum){
 
-    //perfectsquares done
+    if(ind >= arr.size()){
+        for(auto num:sumArr){
+            if(num == sum){
+                return;
+            }
+        }
+        fullAns.push_back(ans);
+        sumArr.push_back(sum);
+        return;
+    }
+
+
+    ans.push_back(arr[ind]);
+    findSumSub(arr, ans, sumArr, fullAns, ind+1, sum+arr[ind]);
+    ans.pop_back();
+    findSumSub(arr, ans, sumArr, fullAns, ind+1, sum);
+}
+
+int main() {
+    vector<int> arr = {0};
+    vector<int> ans;
+    vector<int> sumArr;
+    vector<vector<int>>fullAns;
+   
+    
+    findSumSub(arr, ans, sumArr, fullAns, 0, 0);
+    for(int i=0; i<fullAns.size(); i++){
+        for(int j=0; j<fullAns[i].size(); j++){
+            cout<<fullAns[i][j];
+        }
+        cout<<endl;
+    }
+
 }
