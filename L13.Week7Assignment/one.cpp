@@ -1,55 +1,38 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-void func(int n, int& sum, int i){
-    //base case
-
-
-    //recursive calls
-    while (i*i<=n){
-        sum += 1;
-        if(n >= i*i){
-           return func(n-(i*i), sum, i+1);
-        }
+int fibonacci(int n){
+    if(n <= 1){
+        return n;
     }
-    
+
+    int last = fibonacci(n-1);
+    int slast = fibonacci(n-2);
+    return last + slast;
 }
 
-void findSumSub(vector<int>&arr, vector<int>&ans, vector<int>&sumArr, vector<vector<int>>&fullAns, int ind, int sum){
-
-    if(ind >= arr.size()){
-        for(auto num:sumArr){
-            if(num == sum){
-                return;
-            }
+void func(int arr[], vector<int>&ans, int ind, int size){
+    //base case
+    if(ind >= size){
+        for(auto num:ans){
+            cout<<num<<" ";
         }
-        fullAns.push_back(ans);
-        sumArr.push_back(sum);
+        cout<<endl;
         return;
     }
 
-
+    //recursive call
     ans.push_back(arr[ind]);
-    findSumSub(arr, ans, sumArr, fullAns, ind+1, sum+arr[ind]);
+    func(arr, ans, ind+1, size);
     ans.pop_back();
-    findSumSub(arr, ans, sumArr, fullAns, ind+1, sum);
+    func(arr, ans, ind+1, size);
 }
 
 int main() {
-    vector<int> arr = {0};
-    vector<int> ans;
-    vector<int> sumArr;
-    vector<vector<int>>fullAns;
-   
-    
-    findSumSub(arr, ans, sumArr, fullAns, 0, 0);
-    for(int i=0; i<fullAns.size(); i++){
-        for(int j=0; j<fullAns[i].size(); j++){
-            cout<<fullAns[i][j];
-        }
-        cout<<endl;
-    }
-
+    int arr[] = {3,1,2};
+    vector<int>ans;
+    func(arr, ans, 0, 3);
 }
