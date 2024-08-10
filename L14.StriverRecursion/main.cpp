@@ -3,43 +3,58 @@
 
 using namespace std;
 
-void findComb(int i, int k, int n, vector<int>&ds, vector<vector<int>>&ans){
-    //base case
-    if(i >= n-i){
-        return;
-    }
-    
-    
-    //recursion
+bool help(int ind, vector<int>&buck, vector<int>&ds, vector<vector<int>>&ans, int sum, int k){
+    //base case 
 
-    if(ds.size() > 0){
-        for(int i=1; i<=k; i++){
-            ds.pop_back();
-        }
+    if(ans.size() == k){
+        return true;
     }
-    
 
-    if(i < n-i){`
-        ds.push_back(i);
-        ds.push_back(n-i);
+    if(sum == 0){
         ans.push_back(ds);
-        findComb(i+1, k, n, ds, ans);
+        return help(ind+1, buck, ds, ans, sum, k);
     }
+
+    if(ind == buck.size()) return false;
+
+    if(sum < 0) return false;
+
+    
+    sum -= buck[ind];
+    ds.push_back(buck[ind]);
+    int ans1 = help(ind+1, buck, ds, ans, sum, k);
+    sum += buck[ind];
+    ds.pop_back();
+    
+    int ans2 = help(ind+1, buck, ds, ans, sum, k);
+
+    return ans1 | ans2;
+
+
 }
 
 int main() {
-    int k = 3;
-    int n = 9;
+    vector<int> nums = {2,2,2,2,3,4,5};
+    int k = 4;
+    int totalSum = 0;
+
+
+    for(auto num:nums){
+        totalSum += num;
+    }
+    
+    if(totalSum%k != 0){
+        cout<<"not possible";
+    }
+
+    int sum = totalSum/k;
     vector<int>ds;
     vector<vector<int>>ans;
 
-    findComb(1, k, n, ds, ans);
+
+    int mainAns = help(0, nums, ds, ans, sum, k);
+
+    cout<<mainAns<<endl;
+
     
-   
-    for(int i=0; i<ans.size(); i++){
-        for(int j=0; j<ans[i].size(); j++){
-            cout<<ans[i][j]<<" ";
-        }
-        cout<<endl;
-    }
 }

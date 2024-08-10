@@ -3,25 +3,59 @@
 
 using namespace std;
 
-void func(int ind, vector<int>&arr, vector<int>&ds, vector<vector<int>>&ans, int target){
-    //base case
-
-
-    //recursion
-    for(int i=ind; i<arr.size(); i++){
-        if(arr[i] > target){
-            break;
-        }
-        ds.push_back(arr[i]);
-        func(ind+1, arr, ds, ans, target);
-        ds.pop_back();
-        func(ind+1, arr, ds, ans, target);
+bool help(int ind, vector<int>& nums, vector<int>& ds, vector<vector<int>>& ans, int sum, int k) {
+    // Base case: if we have found k subsets, return true
+    if (ans.size() == k) {
+        return true;
     }
+
+    // If the current subset sum is zero and it's not empty, add it to the answer
+    if (sum == 0 && !ds.empty()) {
+        ans.push_back(ds);
+        // Reset the current subset and sum, and start from the beginning to find the next subset
+        return help(0, nums, ds = vector<int>(), ans, sum, k);
+    }
+
+    // If we reach the end of the array or the sum becomes negative, return false
+    if (ind == nums.size() || sum < 0) {
+        return false;
+    }
+
+    // Include the current element in the subset and recurse
+    ds.push_back(nums[ind]);
+    if (help(ind + 1, nums, ds, ans, sum - nums[ind], k)) {
+        return true;
+    }
+    // Exclude the current element from the subset and recurse
+    ds.pop_back();
+    if (help(ind + 1, nums, ds, ans, sum, k)) {
+        return true;
+    }
+
+    return false;
 }
 
 int main() {
-    vector<int>arr = {1,1,1,2,2};
-    vector<vector<int>>ans;
-    vector<int>ds;
-    func(0, arr, ds, ans, 4);
+    vector<int> nums = {2, 2, 2, 2, 3, 4, 5};
+    int k = 4;
+    int totalSum = 0;
+
+    for (auto num : nums) {
+        totalSum += num;
+    }
+
+    if (totalSum % k != 0) {
+        cout << "not possible" << endl;
+        return 0;
+    }
+
+    int sum = totalSum / k;
+    vector<int> ds;
+    vector<vector<int>> ans;
+
+    bool mainAns = help(0, nums, ds, ans, sum, k);
+
+    cout << mainAns << endl;
+
+    return 0;
 }
