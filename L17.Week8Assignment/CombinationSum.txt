@@ -1,0 +1,36 @@
+class Solution {
+public:
+
+    void findCombSum(int ind, vector<int>&arr, int sum, int target, vector<int>&ds, vector<vector<int>>&ans){
+        
+        if(sum == target){
+            ans.push_back(ds);
+            return;
+        }
+
+        if(sum > target){
+            return;
+        }
+
+        if(ind >= arr.size()){
+            return;
+        }
+
+        
+        sum += arr[ind];
+        ds.push_back(arr[ind]);
+        findCombSum(ind, arr, sum, target, ds, ans);
+        sum -= arr[ind];
+        ds.pop_back();
+
+        findCombSum(ind+1, arr, sum, target, ds, ans);
+
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int>ds;
+        vector<vector<int>>ans;
+        findCombSum(0, candidates, 0, target, ds, ans);
+        return ans;
+    }
+};
