@@ -3,29 +3,16 @@
 
 using namespace std;
 
-void findAns(int i, vector<string>&arr, string&temp, vector<string>&ans, int &maxLength){
+int fibbonaci(int n){
 
+    if(n == 0) return 0;
+    if(n == 1) return 1;
 
-    string str = arr[i];
+    return fibbonaci(n-1) + fibbonaci(n-2);
 
-    for(int j=0; j<str.size(); j++){
-        
-        temp += str;
-
-        findAns(i+1, arr, temp, ans, maxLength);
-
-        int pos = temp.find(str);
-        if(pos != string::npos){
-            temp.erase(pos, str.length());
-        }
-    }
 }
 
 int main() {
-    vector<string> arr = {"cha","r","act","ers"};
-    string temp;
-    vector<string>ans;
-    int maxLength = 0;
-    findAns(0, arr, temp, ans, maxLength);
-
+    int n = 10;
+    cout<<fibbonaci(n);
 }
