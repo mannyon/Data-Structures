@@ -3,16 +3,23 @@
 
 using namespace std;
 
-int fibbonaci(int n){
+int findSteps(int n){
+    if(n <= 3) return n;
 
-    if(n == 0) return 0;
-    if(n == 1) return 1;
-
-    return fibbonaci(n-1) + fibbonaci(n-2);
-
+    return findSteps(n-1) + findSteps(n-2);
 }
 
 int main() {
-    int n = 10;
-    cout<<fibbonaci(n);
+    int n = 5;
+
+    int l = 0, m = 1, s = 0;
+     
+    for(int i=1; i<=n; i++){
+        s = l+m;
+        
+        l = m;
+        m = s;
+    }
+
+    cout<<s<<" ";
 }
