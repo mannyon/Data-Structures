@@ -1,31 +1,63 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-void findAns(int i, vector<string>&arr, string&temp, vector<string>&ans, int &maxLength){
+void merge(int arr[], int start, int mid, int end){
 
+    vector<int>temp(end - start + 1);
 
-    string str = arr[i];
+    int left = start;
+    int right = mid+1;
+    int index = 0;
 
-    for(int j=0; j<str.size(); j++){
-        
-        temp += str;
-
-        findAns(i+1, arr, temp, ans, maxLength);
-
-        int pos = temp.find(str);
-        if(pos != string::npos){
-            temp.erase(pos, str.length());
+    while(left <= mid && right <= end){
+        if(arr[left] <= arr[right]){
+            temp[index++] = arr[left++];
+        }
+        else{
+            temp[index++] = arr[right++];
         }
     }
+
+    while(left <= mid){
+        temp[index++] = arr[left++];
+    }
+
+    while(right <= end){
+        temp[index++] = arr[right++];
+    }
+
+    index = 0;
+
+    while(start <= end){
+        arr[start++] = temp[index++];
+    }
+
+}
+
+void mergeSort(int arr[], int start, int end){
+
+    if(start == end) return;
+
+    int mid = start + (end - start) / 2;
+
+    //left side
+    mergeSort(arr, start, mid);
+    //right side
+    mergeSort(arr, mid+1, end);
+    //merge
+    merge(arr, start, mid, end);
 }
 
 int main() {
-    vector<string> arr = {"cha","r","act","ers"};
-    string temp;
-    vector<string>ans;
-    int maxLength = 0;
-    findAns(0, arr, temp, ans, maxLength);
+    int arr[] = {9,4,7,2,6,51,1};
 
+    mergeSort(arr, 0, (sizeof(arr)/sizeof(arr[0]))-1);
+
+
+    for(auto num:arr){
+        cout<<num<<" ";
+    }
 }
