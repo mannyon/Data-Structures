@@ -1,41 +1,63 @@
 #include <iostream>
 #include <vector>
-#include <cctype>
-#include <string>
+#include <algorithm>
 
 using namespace std;
 
-void reverseStr(int i, int j, string &str){
-    if(i >= j) return;
+void merge(int arr[], int start, int mid, int end){
 
-    swap(str[i], str[j]);
-    reverseStr(i+1, j-1, str);
-}
+    vector<int>temp(end - start + 1);
 
-void myrock(int start, int end, string &str){
-    if(start >= end) return;
+    int left = start;
+    int right = mid+1;
+    int index = 0;
 
-    char c = str[start];
-    str[start] = str[end];
-    str[end] = c;
-    reverseStr(start+1, end-1, str);
-}
-
-void makeUpper(int ind, string &str){
-
-    if(ind >= str.size()) return;
-
-    if(str[ind] >= 'a' && str[ind] <= 'z'){
-        str[ind] = str[ind] - 32;
+    while(left <= mid && right <= end){
+        if(arr[left] <= arr[right]){
+            temp[index++] = arr[left++];
+        }
+        else{
+            temp[index++] = arr[right++];
+        }
     }
 
-    makeUpper(ind+1, str);
+    while(left <= mid){
+        temp[index++] = arr[left++];
+    }
+
+    while(right <= end){
+        temp[index++] = arr[right++];
+    }
+
+    index = 0;
+
+    while(start <= end){
+        arr[start++] = temp[index++];
+    }
+
+}
+
+void mergeSort(int arr[], int start, int end){
+
+    if(start == end) return;
+
+    int mid = start + (end - start) / 2;
+
+    //left side
+    mergeSort(arr, start, mid);
+    //right side
+    mergeSort(arr, mid+1, end);
+    //merge
+    merge(arr, start, mid, end);
 }
 
 int main() {
-    string str = "manish";
+    int arr[] = {9,4,7,2,6,51,1};
 
-    makeUpper(0, str);
+    mergeSort(arr, 0, (sizeof(arr)/sizeof(arr[0]))-1);
 
-    cout<<str<<endl;
+
+    for(auto num:arr){
+        cout<<num<<" ";
+    }
 }
