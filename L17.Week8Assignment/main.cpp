@@ -4,60 +4,35 @@
 
 using namespace std;
 
-void merge(int arr[], int start, int mid, int end){
+int partition(vector<int>&arr, int start, int end){
+    int pos = start;
 
-    vector<int>temp(end - start + 1);
-
-    int left = start;
-    int right = mid+1;
-    int index = 0;
-
-    while(left <= mid && right <= end){
-        if(arr[left] <= arr[right]){
-            temp[index++] = arr[left++];
-        }
-        else{
-            temp[index++] = arr[right++];
+    for(int i=start; i<=end; i++){
+        if(arr[i] <= arr[end]){
+            swap(arr[i], arr[pos]);
+            pos++;
         }
     }
-
-    while(left <= mid){
-        temp[index++] = arr[left++];
-    }
-
-    while(right <= end){
-        temp[index++] = arr[right++];
-    }
-
-    index = 0;
-
-    while(start <= end){
-        arr[start++] = temp[index++];
-    }
-
+    return pos-1;
 }
 
-void mergeSort(int arr[], int start, int end){
+void quickSort(vector<int>&arr, int start, int end){
+    if(start >= end) return;
 
-    if(start == end) return;
+    int pivot = partition(arr, start, end);
 
-    int mid = start + (end - start) / 2;
-
-    //left side
-    mergeSort(arr, start, mid);
-    //right side
-    mergeSort(arr, mid+1, end);
-    //merge
-    merge(arr, start, mid, end);
+    quickSort(arr, start, pivot-1);
+    quickSort(arr, pivot+1, end);
 }
 
 int main() {
-    int arr[] = {9,4,7,2,6,51,1};
+    vector<int>arr = {8,7,6,5,4,3};
 
-    mergeSort(arr, 0, (sizeof(arr)/sizeof(arr[0]))-1);
+    quickSort(arr, 0, arr.size()-1);
 
+    cout<<"working well"<<endl;
 
-    for(auto num:arr){
-        cout<<num<<" ";
+    for(auto e:arr){
+        cout<<e<<" ";
     }
 }
