@@ -1,38 +1,32 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-int partition(vector<int>&arr, int start, int end){
-    int pos = start;
 
-    for(int i=start; i<=end; i++){
-        if(arr[i] <= arr[end]){
-            swap(arr[i], arr[pos]);
-            pos++;
-        }
+void findAns(int n, int left, int right, string &ans, vector<string>&totalAns){
+
+    if(left == n && right == n){
+        totalAns.push_back(ans);
+        return;
     }
-    return pos-1;
-}
 
-void quickSort(vector<int>&arr, int start, int end){
-    if(start >= end) return;
-
-    int pivot = partition(arr, start, end);
-
-    quickSort(arr, start, pivot-1);
-    quickSort(arr, pivot+1, end);
+    if(left < n){
+        ans.push_back('(');
+        findAns(n, left+1, right, ans, totalAns);
+        ans.pop_back();
+    }
+    if(right < left){
+        ans.push_back(')');
+        findAns(n, left, right+1, ans, totalAns);
+        ans.pop_back();
+    }
 }
 
 int main() {
-    vector<int>arr = {8,7,6,5,4,3};
-
-    quickSort(arr, 0, arr.size()-1);
-
-    cout<<"working well"<<endl;
-
-    for(auto e:arr){
-        cout<<e<<" ";
-    }
+    int n = 1;
+    string ans;
+    vector<string> totalAns;
+    findAns(n, 0, 0, ans, totalAns);
 }
