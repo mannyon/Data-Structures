@@ -1,32 +1,28 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 
-using namespace std;
+using namespace std; 
 
-
-void findAns(int n, int left, int right, string &ans, vector<string>&totalAns){
-
-    if(left == n && right == n){
-        totalAns.push_back(ans);
+void findElem(vector<int>&arr, int ind, int sum, int &totalElem){
+    if(sum == 0){
+        totalElem ++;
         return;
     }
 
-    if(left < n){
-        ans.push_back('(');
-        findAns(n, left+1, right, ans, totalAns);
-        ans.pop_back();
+    if(ind == arr.size() || sum < 0){
+        return;
     }
-    if(right < left){
-        ans.push_back(')');
-        findAns(n, left, right+1, ans, totalAns);
-        ans.pop_back();
-    }
+
+    findElem(arr, ind+1, sum - arr[ind], totalElem);
+    findElem(arr, ind+1, sum, totalElem);
 }
 
+
 int main() {
-    int n = 1;
-    string ans;
-    vector<string> totalAns;
-    findAns(n, 0, 0, ans, totalAns);
+    vector<int>arr = {5,2,3,6,10,8};
+    int sum = 10;
+    int totalElem = 0;
+    findElem(arr, 0, sum, totalElem);
+    cout<<totalElem<<endl;
 }
