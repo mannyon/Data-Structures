@@ -1,28 +1,38 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
-using namespace std; 
+using namespace std;
 
-void findElem(vector<int>&arr, int ind, int sum, int &totalElem){
-    if(sum == 0){
-        totalElem ++;
-        return;
+int findTotal(int ind, vector<int> &arr, int sum)
+{   
+
+    if (ind >= arr.size())
+    {
+        // if sum is equals to zero, then it will return 1
+        // or else it will return 0.
+        return sum == 0;
     }
 
-    if(ind == arr.size() || sum < 0){
-        return;
-    }
-
-    findElem(arr, ind+1, sum - arr[ind], totalElem);
-    findElem(arr, ind+1, sum, totalElem);
+    return findTotal(ind + 1, arr, sum - arr[ind]) + findTotal(ind + 1, arr, sum);
 }
 
+int repeteadAns(int ind, vector<int>&arr, int sum){
 
-int main() {
-    vector<int>arr = {5,2,3,6,10,8};
-    int sum = 10;
-    int totalElem = 0;
-    findElem(arr, 0, sum, totalElem);
-    cout<<totalElem<<endl;
+    if(sum == 0){
+        return 1;
+    }
+
+    if(sum < 0 || ind >= arr.size()){
+        return 0;
+    }
+
+    return repeteadAns(ind, arr, sum - arr[ind]) + repeteadAns(ind + 1, arr, sum);
+}
+
+int main()
+{
+    vector<int> arr = {1,1};
+    int sum = 1;
+    // cout << findTotal(0, arr, sum);
+    cout<<repeteadAns(0, arr, sum);
 }
