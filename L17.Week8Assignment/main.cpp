@@ -1,38 +1,61 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
-using namespace std;
+using namespace std; 
 
-int findTotal(int ind, vector<int> &arr, int sum)
-{   
+void findPermutation(int ind, vector<int>&arr, vector<int>&ds){
 
-    if (ind >= arr.size())
-    {
-        // if sum is equals to zero, then it will return 1
-        // or else it will return 0.
-        return sum == 0;
+    if(ind >= arr.size()){
+        for(auto e:arr){
+            cout<<e<<" ";
+        }
+        cout<<endl;
+        return;
     }
 
-    return findTotal(ind + 1, arr, sum - arr[ind]) + findTotal(ind + 1, arr, sum);
+    for(int i = ind; i<arr.size(); i++){
+        swap(arr[i], arr[ind]);
+        findPermutation(ind+1, arr, ds);
+        swap(arr[i], arr[ind]);
+    }
 }
 
-int repeteadAns(int ind, vector<int>&arr, int sum){
 
-    if(sum == 0){
-        return 1;
+void permut(vector<int>&arr, vector<int>&temp, vector<vector<int>>&ans, vector<bool>&visited){
+    if(temp.size() == arr.size()){
+        ans.push_back(temp);
+        return;
     }
 
-    if(sum < 0 || ind >= arr.size()){
-        return 0;
+    for(int i=0; i<arr.size(); i++){
+        if(visited[i] == 0){
+            visited[i] = 1;
+            temp.push_back(arr[i]);
+            permut(arr, temp, ans, visited);
+            visited[i] = 0;
+            temp.pop_back();
+        }
     }
-
-    return repeteadAns(ind, arr, sum - arr[ind]) + repeteadAns(ind + 1, arr, sum);
 }
 
-int main()
-{
-    vector<int> arr = {1,1};
-    int sum = 1;
-    // cout << findTotal(0, arr, sum);
-    cout<<repeteadAns(0, arr, sum);
+
+int main() {
+    vector<int>arr = {1,2,3};
+    vector<int>temp;
+    vector<vector<int>>ans;
+    vector<bool>visited(arr.size(), 0);
+
+
+
+    permut(arr, temp, ans, visited);
+
+    for(int i=0; i<ans.size(); i++){
+        for(int j=0; j<ans[i].size(); j++){
+            cout<<ans[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    // findPermutation(0, arr, ds);
+    
 }
