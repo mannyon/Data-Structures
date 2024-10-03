@@ -1,22 +1,22 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-int findPermut(vector<int> &arr, int sum)
+void toh(int n, int source, int help, int dest)
 {
-    if(sum == 0) return 1;
-    if(sum < 0) return 0;
-    int ans = 0;
-    for(int i=0; i<arr.size(); i++){
-        ans += findPermut(arr, sum-arr[i]);
+    if (n == 1)
+    {
+        cout << "MD1F " << source << " to " << dest << endl;
+        return;
     }
-    return ans;
+    toh(n - 1, source, dest, help);
+    cout << "MD" << n << "F " << source << " to " << dest << endl;
+    toh(n - 1, help, source, dest);
 }
 
 int main()
 {
-    vector<int> arr = {1,5,6};
-    cout<<findPermut(arr, 7)<<endl;
+    int n = 4;
+    toh(n,1,2,3);
 }
