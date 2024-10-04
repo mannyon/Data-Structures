@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool findInd(vector<int> &lastInd, int ind)
+{
+    for (auto e : lastInd)
+    {
+        if (e == ind)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+class BreakRecursion {};
+
+void findAns(int ind, int n, int k, int j, vector<int> &lastInd)
+{
+    if(lastInd.size() == n-1){
+        throw BreakRecursion();
+    }
+
+    if (ind == n)
+    {
+        ind = 0;
+        findAns(ind, n, k, j, lastInd);
+    }
+
+    if (j == k && !findInd(lastInd, ind))
+    {
+        lastInd.push_back(ind);
+        j = 1;
+        findAns(ind + 1, n, k, j, lastInd);
+    }
+
+    if (lastInd.size() == 0 || !findInd(lastInd, ind))
+    {
+        findAns(ind + 1, n, k, j + 1, lastInd);
+    }
+    else{
+        findAns(ind + 1, n, k, j, lastInd);
+    }
+
+    
+
+    
+}
+
+int main()
+{
+    int n = 5;
+    int k = 3;
+    vector<int> lastInd;
+    try {
+        findAns(0, n, k, 1, lastInd);
+    } catch (BreakRecursion& e) {
+        cout << "Recursion broke at i = 3, returning to main." << endl;
+    }
+
+    for(auto e:lastInd){
+        cout<<e<<" "<<endl;
+    }
+
+    cout << "Back in main function." << endl;
+    return 0;
+}
